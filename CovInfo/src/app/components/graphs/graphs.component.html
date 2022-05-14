@@ -1,1 +1,26 @@
 <p>graphs works!</p>
+<button (click)="getData()" class="btn btn-dark" color="primary">get data</button>
+<button (click)="resetChart()" class="btn btn-dark" color="primary">reset chart</button>
+
+<div>
+    <mat-checkbox class="example-margin" (change)="setConfirmed($event.checked)">Show confirmed</mat-checkbox>
+    <mat-checkbox class="example-margin" (change)="setDeaths($event.checked)">Show deaths</mat-checkbox>
+    <mat-checkbox class="example-margin" (change)="setActive($event.checked)">Show active</mat-checkbox>
+</div>
+
+<mat-form-field appearance="fill">
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate placeholder="Start date" #startDate
+      (dateChange)="dateRangeChange(startDate, endDate)">
+      <input matEndDate placeholder="End date" #endDate
+      (dateChange)="dateRangeChange(startDate, endDate)">
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>
+
+
+<p-chart type="line" [data]="data"></p-chart>
+<button type="button" pButton (click)="update($event)"></button>

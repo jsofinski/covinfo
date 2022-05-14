@@ -12,13 +12,18 @@ export class CovidApiService {
 
 
   getTestRequest() {
-    this.SpinnerService.show();
     let link = "/country/poland?from=2020-03-01T00:00:00Z&to=2021-04-01T00:00:00Z";
     return this.http.get<any>(environment.apiUrl + link);
   }
 
   getSummaryRequest() {
     return this.http.get<any>(environment.apiUrl + '/summary');
+  }
+
+  getCountryFromTo(country: String, from: String, to:String) {
+    let link = "/country/" + country + "?from=" + from + "&to=" + to;
+    console.log(link)
+    return this.http.get<any>(environment.apiUrl + link);
   }
 
   showSpinner() {

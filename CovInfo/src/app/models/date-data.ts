@@ -33,5 +33,8 @@ export class DateData {
     setNewRecovered(lastRecovered: number) {
         this.newRecovered = this.recovered - lastRecovered;
     }
+    setActive(lastActive: number) {
+        this.active = this.active - lastActive;
+    }
 }
 
