@@ -1,0 +1,26 @@
+<p>summary works!</p>
+
+<section>
+    <div class="d-flex p-2 bd-highlight justify-content-between bg-light">
+        <button (click)="getData()" class="btn btn-dark" color="primary">get Summary</button>
+        <button (click)="showHide()" class="btn btn-dark" color="primary">
+            {{showAllCountries ? 'Hide all countries' : 'Show all countries'}}
+        </button>
+    </div>
+</section>
+
+<div>
+    <p>Global confirmed: {{globalSummary.totalConfirmed}}</p>
+    <p>Global deaths: {{globalSummary.totalDeaths}}</p>
+</div>
+
+<div *ngIf="showAllCountries">
+    <div *ngFor="let res of allSummaries; let i = index">
+        <p> 
+            <a>Country: {{ res.country }};</a>
+            <a>total confirmed: {{res.totalConfirmed}};</a>
+            <a>totalDeaths: {{res.totalDeaths}}</a>
+        </p>
+        <hr>
+    </div>
+</div>
