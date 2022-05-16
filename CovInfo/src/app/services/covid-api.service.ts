@@ -1,35 +1,94 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { NgxSpinnerService } from "ngx-spinner";  
+import { NgxSpinnerService } from 'ngx-spinner';
+import Summary, { CountrySummary } from '../models/summary';
+import { DateData } from '../models/date-data';
+import { CountryData } from '../models/country-data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CovidApiService {
-
-  constructor(private http: HttpClient, private SpinnerService: NgxSpinnerService) { }
-
+  constructor(
+    private http: HttpClient
+  ) {}
 
   getTestRequest() {
-    let link = "/country/poland?from=2020-03-01T00:00:00Z&to=2021-04-01T00:00:00Z";
+    let link =
+      '/country/poland?from=2020-03-01T00:00:00Z&to=2021-04-01T00:00:00Z';
     return this.http.get<any>(environment.apiUrl + link);
   }
 
-  getSummaryRequest() {
-    return this.http.get<any>(environment.apiUrl + '/summary');
+  async getSummaryRequest(): Promise<{
+    global: Summary;
+    countries: CountrySummary[];
+  }> {
+    // const response = await this.http.get<any>(environment.apiUrl + '/summary');
+    const response = await fetch(environment.apiUrl + '/summary');
+    if (response.body == null) {
+      throw Error("Covid api returned unexpected response");
+    }
+    const data = await response.json();
+
+    const global = {
+      cases: data.Global.TotalConfirmed,
+      deaths: data.Global.TotalDeaths,
+    };
+    const countries = data.Countries.map((element: any) => ({
+      country: element.Country,
+      countryCode: element.CountryCode,
+      cases: element.TotalConfirmed,
+      deaths: element.TotalDeaths,
+    }));
+
+    return { global, countries };
   }
 
-  getCountryFromTo(country: String, from: String, to:String) {
-    let link = "/country/" + country + "?from=" + from + "&to=" + to;
-    console.log(link)
-    return this.http.get<any>(environment.apiUrl + link);
+  async getCountryFromTo(country: String, from: String, to: String): Promise<DateData[]> {
+    let link = '/country/' + country + '?from=' + from + '&to=' + to;
+    const response = await fetch(environment.apiUrl + link);
+    if (response.body == null) {
+      throw Error("Covid api returned unexpected response");
+    }
+    const data = await response.json();
+
+    const dateData = data.map((element: any) => ({
+      date: element.Date,
+      active: element.Active,
+      confirmed: element.Confirmed,
+      deaths: element.Deaths,
+      recovered: element.Recovered,      
+    }));
+
+    return dateData;
   }
 
-  showSpinner() {
-    this.SpinnerService.show();
+  async getCountries(): Promise<CountryData[]> {
+    const response = await fetch(environment.apiUrl + '/countries');
+    if (response.body == null) {
+      throw Error("Covid api returned unexpected response");
+    }
+    const data = await response.json();
+
+    const countries = data.map((element: any) => ({
+      country: element.Country,
+      countryCode: element.ISO2, 
+    }));
+
+    return countries;
   }
-  hideSpinner() {
-    this.SpinnerService.hide();
+  async getCountriesList(): Promise<string[]> {
+    const response = await fetch(environment.apiUrl + '/countries');
+    if (response.body == null) {
+      throw Error("Covid api returned unexpected response");
+    }
+    const data = await response.json();
+
+    const countries: string[] = [];
+    data.forEach((element: any) => {
+      countries.push(element.Country)
+    });
+    return countries;
   }
 }

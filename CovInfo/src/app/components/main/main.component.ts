@@ -18,13 +18,14 @@ export class MainComponent implements OnInit {
   }
 
   getData1(){
-    this.covidApiService.getSummaryRequest().subscribe(data => console.log(data));
   }
   getData2(){
-    this.covidApiService.getTestRequest().subscribe(data => console.log(data));
   }
   getData3(){}
   getData4(){}
-  getData5(){}
+  async getData5(){
+    let data = await this.covidApiService.getCountries();
+    console.log(data);
+  }
 
 }

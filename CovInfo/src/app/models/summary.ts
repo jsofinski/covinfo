@@ -1,14 +1,11 @@
-export class Summary {
+type Summary = {
+    cases: number;
+    deaths: number;
+}
+
+export type CountrySummary = {
     country: string;
     countryCode: string;
-    totalConfirmed: number;
-    totalDeaths: number;
+} & Summary;
 
-
-    constructor(country: string, countryCode: string, totalConfirmed: number, totalDeaths: number) {
-        this.country = country;
-        this.countryCode = countryCode;
-        this.totalDeaths = totalDeaths;
-        this.totalConfirmed = totalConfirmed;
-    }
-}
+export default Summary;

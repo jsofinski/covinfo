@@ -6,21 +6,26 @@
         <button (click)="showHide()" class="btn btn-dark" color="primary">
             {{showAllCountries ? 'Hide all countries' : 'Show all countries'}}
         </button>
+        <div>
+            <label>Filter:</label>
+            <input #filterInput>
+            <button (click)="changeFilter(filterInput.value)" class="btn btn-dark" color="primary">Filter</button>
+        </div>
     </div>
 </section>
 
 <div>
-    <p>Global confirmed: {{globalSummary.totalConfirmed}}</p>
-    <p>Global deaths: {{globalSummary.totalDeaths}}</p>
+    <p>Global confirmed: {{globalSummary.cases}}</p>
+    <p>Global deaths: {{globalSummary.deaths}}</p>
 </div>
 
 <div *ngIf="showAllCountries">
     
-    <div *ngFor="let res of allSummaries; let i = index">
+    <div *ngFor="let res of coutrySummariesToShow; let i = index">
         <p> 
             <a>Country: {{ res.country }};</a>
-            <a>total confirmed: {{res.totalConfirmed}};</a>
-            <a>totalDeaths: {{res.totalDeaths}}</a>
+            <a>total confirmed: {{res.cases}};</a>
+            <a>totalDeaths: {{res.deaths}}</a>
         </p>
         <hr>
     </div>
