@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TotalComponent } from './total.component';
+import { CompareComponent } from './compare.component';
 
-describe('TotalComponent', () => {
-  let component: TotalComponent;
-  let fixture: ComponentFixture<TotalComponent>;
+describe('CompareComponent', () => {
+  let component: CompareComponent;
+  let fixture: ComponentFixture<CompareComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TotalComponent ]
+      declarations: [ CompareComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TotalComponent);
+    fixture = TestBed.createComponent(CompareComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

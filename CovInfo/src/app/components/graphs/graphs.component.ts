@@ -90,16 +90,19 @@ export class GraphsComponent implements OnInit {
       datasets.push({
         label: 'Confirmed',
         data: dataConfirmed,
+        borderColor: 'green',
       });
     if (this.showDeaths)
       datasets.push({
         label: 'Deaths',
         data: dataDeath,
+        borderColor: 'black',
       });
     if (this.showActive)
       datasets.push({
         label: 'Active',
         data: dataActive,
+        borderColor: 'red',
       });
     this.data = {
       labels: newLabels,

@@ -18,6 +18,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {ChartModule} from 'primeng/chart';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table'  
+import {MatSortModule} from '@angular/material/sort';
+import { CompareComponent } from './components/compare/compare.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MainComponent,
     GraphsComponent,
     TotalComponent,
-    SummaryComponent
+    SummaryComponent,
+    CompareComponent,
   ],
   imports: [
     HttpClientModule,
@@ -40,7 +44,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatFormFieldModule,
     MatInputModule,
     ChartModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
