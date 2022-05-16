@@ -42,9 +42,12 @@ export class SummaryComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getData();
+    this.refreshData();
+  }
+
+  refreshData() {
     this.dataSource = new MatTableDataSource(this.coutrySummariesToShow);
     this.dataSource.sort = this.sort;
-
   }
 
   changeFilter(value: string) {
@@ -53,8 +56,8 @@ export class SummaryComponent implements OnInit, AfterViewInit {
     this.coutrySummariesToShow = this.coutrySummaries.filter(
       summary => (summary.country).toLowerCase().includes(value.toLowerCase())
     )
-    console.log(value);
-    // this.coutrySummaries.filter();
+    console.log(this.coutrySummariesToShow.length);
+    this.refreshData();
   }
 
   async getData() {
@@ -66,6 +69,8 @@ export class SummaryComponent implements OnInit, AfterViewInit {
       this.coutrySummaries = summaryData.countries;
       this.coutrySummariesToShow = summaryData.countries;
       this.countriesList = await this.covidApiService.getCountriesList(); 
+      this.dataSource = new MatTableDataSource(this.coutrySummariesToShow);
+      this.dataSource.sort = this.sort;
     } catch (e) {
       // TODO popup
     } finally {
@@ -73,11 +78,6 @@ export class SummaryComponent implements OnInit, AfterViewInit {
     }
   }
 
-  sortData() {
-    this.dataSource = new MatTableDataSource(this.coutrySummariesToShow);
-    this.dataSource.sort = this.sort;
-    
-  }
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);

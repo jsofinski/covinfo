@@ -1,63 +1,48 @@
-<p>summary works!</p>
-
 <section>
     <div class="d-flex p-2 bd-highlight justify-content-between bg-light">
-        <button (click)="getData()" class="btn btn-dark" color="primary">get Summary</button>
-        <button (click)="sortData()" class="btn btn-dark" color="primary">Sort</button>
-        <button (click)="showHide()" class="btn btn-dark" color="primary">
-            {{showAllCountries ? 'Hide all countries' : 'Show all countries'}}
-        </button>
+        <button (click)="getData()" class="btn btn-dark" color="primary">Refresh</button>
+
         <div>
-            <label>Filter:</label>
-            <input #filterInput>
+            <input #filterInput placeholder="Filter">
             <button (click)="changeFilter(filterInput.value)" class="btn btn-dark" color="primary">Filter</button>
         </div>
     </div>
 </section>
 
-<div>
+<!-- <div>
     <p>Global confirmed: {{globalSummary.cases}}</p>
     <p>Global deaths: {{globalSummary.deaths}}</p>
+</div> -->
+
+<div class="d-flex justify-content-center">
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+      class="mat-elevation-z8">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by country">
+        Country
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.country}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="cases">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cases">
+        Cases
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.cases}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="deaths">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by deaths">
+        Deaths
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.deaths}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
-
-<div *ngIf="showAllCountries">
-    <div *ngFor="let res of coutrySummariesToShow; let i = index">
-        <p> 
-            <a>Country: {{ res.country }};</a>
-            <a>total confirmed: {{res.cases}};</a>
-            <a>totalDeaths: {{res.deaths}}</a>
-        </p>
-        <hr>
-    </div>
-</div>
-
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-    class="mat-elevation-z8">
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="country">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by country">
-      country
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.country}} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="cases">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cases">
-      cases
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.cases}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="deaths">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by deaths">
-      Deaths
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.deaths}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>

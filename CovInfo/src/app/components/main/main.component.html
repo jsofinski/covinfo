@@ -1,12 +1,15 @@
-<p>main works!</p>
-
 <section>
     <div class="d-flex p-2 bd-highlight justify-content-between bg-light">
-        <button (click)="getData1()" class="btn btn-dark" color="primary">getData1</button>
-        <button (click)="getData2()" class="btn btn-dark" color="primary">getData2</button>
-        <button (click)="getData3()" class="btn btn-dark" color="primary">getData3</button>
-        <button (click)="getData4()" class="btn btn-dark" color="primary">getData4</button>
-        <button (click)="getData5()" class="btn btn-dark" color="primary">getData5</button>
+        <button (click)="fetchData()" class="btn btn-dark" color="primary">Refresh</button>
+        
+         <ng-select style="width: 200px"
+                    [items]="allCountriesNames" 
+                    bindLabel="country" 
+                    bindValue="country"   
+                    appearance="outline"
+                    [(ngModel)]="selectedCountryName"
+                    (ngModelChange)="setCountry()">
+         </ng-select>
     </div>
 </section>
 
@@ -18,5 +21,16 @@
     <div class="display-2" id="maincounterDeaths">
         <p>Global deaths:</p>
         <p>{{globalSummary.deaths}}</p>
+    </div>
+</div>
+
+<div class="text-center">
+    <div class="display-2" id="maincounterCases">
+        <p>{{selectedCountry.country}} confirmed:</p>
+        <p>{{selectedCountry.cases}}</p>
+    </div>
+    <div class="display-2" id="maincounterDeaths">
+        <p>{{selectedCountry.country}} deaths:</p>
+        <p>{{selectedCountry.deaths}}</p>
     </div>
 </div>

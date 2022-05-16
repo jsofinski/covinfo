@@ -8,7 +8,6 @@ import { MainComponent } from './components/main/main.component';
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
-import { TotalComponent } from './components/total/total.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { NgxSpinnerModule } from "ngx-spinner";  
 import { MatSliderModule } from '@angular/material/slider';
@@ -21,13 +20,14 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table'  
 import {MatSortModule} from '@angular/material/sort';
 import { CompareComponent } from './components/compare/compare.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     GraphsComponent,
-    TotalComponent,
     SummaryComponent,
     CompareComponent,
   ],
@@ -45,8 +45,10 @@ import { CompareComponent } from './components/compare/compare.component';
     MatInputModule,
     ChartModule,
     MatCheckboxModule,
+    MatSortModule,
     MatTableModule,
-    MatSortModule
+    NgSelectModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
