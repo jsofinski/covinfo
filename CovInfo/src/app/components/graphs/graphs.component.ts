@@ -53,6 +53,7 @@ export class GraphsComponent implements OnInit {
     this.resetChart();
   }
 
+
   options = {
     title: {
       display: true,
@@ -140,7 +141,14 @@ export class GraphsComponent implements OnInit {
     temp.setFullYear(parseInt(splitted[2]));
     this.toDate = temp;
 
-    this.getData();
+    // check if both dates are valid
+    try {
+      if (this.toDate.toISOString() && this.fromDate.toISOString()) {
+        this.getData();
+      } 
+    } catch (e) {
+      // one of the date isnt picked. Probably the date has been changed.
+    }
   }
 
   async getData() {
@@ -155,7 +163,7 @@ export class GraphsComponent implements OnInit {
         this.toDate.toISOString()
       );
     } catch (e) {
-      confirm('Error occurred while downloading data');
+      confirm((<Error>e).message);
     } finally {
       this.SpinnerService.hide();
     }
