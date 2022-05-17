@@ -9,16 +9,16 @@ import { GraphsComponent } from './components/graphs/graphs.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { SummaryComponent } from './components/summary/summary.component';
-import { NgxSpinnerModule } from "ngx-spinner";  
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {ChartModule} from 'primeng/chart';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import { MatTableModule } from '@angular/material/table'  
-import {MatSortModule} from '@angular/material/sort';
+import { ChartModule } from 'primeng/chart';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 import { CompareComponent } from './components/compare/compare.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
@@ -36,7 +36,7 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgbModule,  
+    NgbModule,
     NgxSpinnerModule,
     MatSliderModule,
     MatDatepickerModule,
@@ -48,9 +48,9 @@ import { FormsModule } from '@angular/forms';
     MatSortModule,
     MatTableModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

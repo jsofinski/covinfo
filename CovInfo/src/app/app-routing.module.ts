@@ -8,24 +8,24 @@ import { SummaryComponent } from './components/summary/summary.component';
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent
+    component: MainComponent,
   },
   {
     path: 'graphs',
-    component: GraphsComponent
+    component: GraphsComponent,
   },
   {
     path: 'summary',
-    component: SummaryComponent
+    component: SummaryComponent,
   },
-  {
-    path: 'compare',
-    component: CompareComponent
-  }
+  // {
+  //   path: 'compare',
+  //   component: CompareComponent
+  // }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

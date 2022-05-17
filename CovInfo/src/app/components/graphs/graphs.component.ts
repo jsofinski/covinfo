@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DateData } from 'src/app/models/date-data';
+import { CountrySummary } from 'src/app/models/summary';
 import { CovidApiService } from 'src/app/services/covid-api.service';
 
 @Component({
@@ -16,32 +17,40 @@ export class GraphsComponent implements OnInit {
   showDeaths: boolean = false;
   showActive: boolean = false;
 
+  selectedCountryName = 'Poland';
+  allCountriesNames: string[] = [];
   countryArray: Array<String>;
   country: string = 'poland';
   dataArray: DateData[];
+
   constructor(
     private covidApiService: CovidApiService,
     private SpinnerService: NgxSpinnerService
   ) {
     this.covidApiService = covidApiService;
 
-    this.toDate = new Date();
-    this.fromDate = new Date();
+    this.toDate = new Date(0);
+    this.fromDate = new Date(0);
     this.fromDate.setMonth(this.toDate.getMonth() - 1);
     this.countryArray = new Array<String>();
     this.dataArray = [];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchCountries();
+  }
 
   setConfirmed(value: boolean) {
     this.showConfirmed = value;
+    this.resetChart();
   }
   setDeaths(value: boolean) {
     this.showDeaths = value;
+    this.resetChart();
   }
   setActive(value: boolean) {
     this.showActive = value;
+    this.resetChart();
   }
 
   options = {
@@ -55,10 +64,10 @@ export class GraphsComponent implements OnInit {
     },
   };
   data = {
-    labels: ['heh'],
+    labels: [''],
     datasets: [
       {
-        label: 'First Dataset',
+        label: 'Empty dataset',
         data: [0],
       },
     ],
@@ -78,7 +87,10 @@ export class GraphsComponent implements OnInit {
     this.dataArray.forEach((element, index) => {
       // first index is a day before fromDate
       if (index === 0) return;
-      newLabels.push(element.date.toString());
+      let day = element.date.getDate();
+      let month = element.date.getMonth() + 1;
+      let year = element.date.getFullYear();
+      newLabels.push(day + '-' + month + '-' + year);
       dataConfirmed.push(element.confirmed - lastElement.confirmed);
       dataDeath.push(element.deaths - lastElement.deaths);
       dataActive.push(element.recovered - lastElement.recovered);
@@ -127,6 +139,8 @@ export class GraphsComponent implements OnInit {
     temp.setDate(parseInt(splitted[1]));
     temp.setFullYear(parseInt(splitted[2]));
     this.toDate = temp;
+
+    this.getData();
   }
 
   async getData() {
@@ -136,14 +150,37 @@ export class GraphsComponent implements OnInit {
       this.SpinnerService.show();
       // summaryData.global, .countries
       this.dataArray = await this.covidApiService.getCountryFromTo(
-        this.country,
+        this.selectedCountryName,
         this.fromDate.toISOString(),
         this.toDate.toISOString()
       );
     } catch (e) {
-      // TODO popup
+      confirm('Error occurred while downloading data');
     } finally {
       this.SpinnerService.hide();
+    }
+    this.resetChart();
+  }
+
+  async fetchCountries() {
+    try {
+      this.SpinnerService.show();
+      // summaryData.global, .countries
+      const summaryData = await this.covidApiService.getSummaryRequest();
+      this.allCountriesNames = summaryData.countries.map((t) => t.country);
+    } catch (e) {
+      confirm('Error occurred while downloading data');
+    } finally {
+      this.SpinnerService.hide();
+    }
+  }
+
+  setCountry() {
+    console.log(this.selectedCountryName);
+    if (this.toDate.getTime() == 0 || this.toDate.getTime() == 0) {
+      console.log('dupa');
+    } else {
+      this.getData();
     }
   }
 }

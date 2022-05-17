@@ -29,11 +29,10 @@ export class SummaryComponent implements OnInit, AfterViewInit {
     this.coutrySummariesToShow = [];
     this.countriesList = [];
     this.dataSource = new MatTableDataSource(this.coutrySummariesToShow);
-    this.globalSummary = {cases: 0, deaths: 0};
+    this.globalSummary = { cases: 0, deaths: 0 };
   }
 
-
-  @ViewChild(MatSort) sort: MatSort = new MatSort;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   ngAfterViewInit(): void {
     this.dataSource = new MatTableDataSource(this.coutrySummariesToShow);
@@ -53,9 +52,9 @@ export class SummaryComponent implements OnInit, AfterViewInit {
   changeFilter(value: string) {
     this.coutrySummariesToShow = [];
     let temp = this.coutrySummaries;
-    this.coutrySummariesToShow = this.coutrySummaries.filter(
-      summary => (summary.country).toLowerCase().includes(value.toLowerCase())
-    )
+    this.coutrySummariesToShow = this.coutrySummaries.filter((summary) =>
+      summary.country.toLowerCase().includes(value.toLowerCase())
+    );
     console.log(this.coutrySummariesToShow.length);
     this.refreshData();
   }
@@ -68,11 +67,11 @@ export class SummaryComponent implements OnInit, AfterViewInit {
       this.globalSummary = summaryData.global;
       this.coutrySummaries = summaryData.countries;
       this.coutrySummariesToShow = summaryData.countries;
-      this.countriesList = await this.covidApiService.getCountriesList(); 
+      this.countriesList = await this.covidApiService.getCountriesList();
       this.dataSource = new MatTableDataSource(this.coutrySummariesToShow);
       this.dataSource.sort = this.sort;
     } catch (e) {
-      // TODO popup
+      confirm('Error occurred while downloading data');
     } finally {
       this.SpinnerService.hide();
     }
@@ -83,7 +82,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
-    }    
+    }
   }
 
   showHide() {

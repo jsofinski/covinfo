@@ -10,9 +10,7 @@ import { CountryData } from '../models/country-data';
   providedIn: 'root',
 })
 export class CovidApiService {
-  constructor(
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   getTestRequest() {
     let link =
@@ -27,7 +25,7 @@ export class CovidApiService {
     // const response = await this.http.get<any>(environment.apiUrl + '/summary');
     const response = await fetch(environment.apiUrl + '/summary');
     if (response.body == null) {
-      throw Error("Covid api returned unexpected response");
+      throw Error('Covid api returned unexpected response');
     }
     const data = await response.json();
 
@@ -45,20 +43,24 @@ export class CovidApiService {
     return { global, countries };
   }
 
-  async getCountryFromTo(country: String, from: String, to: String): Promise<DateData[]> {
+  async getCountryFromTo(
+    country: String,
+    from: String,
+    to: String
+  ): Promise<DateData[]> {
     let link = '/country/' + country + '?from=' + from + '&to=' + to;
     const response = await fetch(environment.apiUrl + link);
     if (response.body == null) {
-      throw Error("Covid api returned unexpected response");
+      throw Error('Covid api returned unexpected response');
     }
     const data = await response.json();
 
     const dateData = data.map((element: any) => ({
-      date: element.Date,
+      date: new Date(element.Date),
       active: element.Active,
       confirmed: element.Confirmed,
       deaths: element.Deaths,
-      recovered: element.Recovered,      
+      recovered: element.Recovered,
     }));
 
     return dateData;
@@ -67,13 +69,13 @@ export class CovidApiService {
   async getCountries(): Promise<CountryData[]> {
     const response = await fetch(environment.apiUrl + '/countries');
     if (response.body == null) {
-      throw Error("Covid api returned unexpected response");
+      throw Error('Covid api returned unexpected response');
     }
     const data = await response.json();
 
     const countries = data.map((element: any) => ({
       country: element.Country,
-      countryCode: element.ISO2, 
+      countryCode: element.ISO2,
     }));
 
     return countries;
@@ -81,13 +83,13 @@ export class CovidApiService {
   async getCountriesList(): Promise<string[]> {
     const response = await fetch(environment.apiUrl + '/countries');
     if (response.body == null) {
-      throw Error("Covid api returned unexpected response");
+      throw Error('Covid api returned unexpected response');
     }
     const data = await response.json();
 
     const countries: string[] = [];
     data.forEach((element: any) => {
-      countries.push(element.Country)
+      countries.push(element.Country);
     });
     return countries;
   }
